@@ -13,11 +13,11 @@ import com.pyro.diony.domain.advertisement.repository.AudioRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Optional;
 
 @Slf4j
 @Service
@@ -60,7 +60,17 @@ public class AdvertisementService {
         audioRepository.save(Audio.builder()
                 .location(dto.getLocation())
                 .prompt(dto.getPrompt())
+                .audioUrl(dto.getAudioUrl())
                 .advertisement(ad)
                 .build());
+    }
+
+    public List<AdvertiseResponse> getAll() {
+        List<Advertisement> ads = advertiseRepository
+                .findAll(Sort.by(Sort.Direction.DESC, "createdAt"));
+        return ads.stream().map(ad -> AdvertiseResponse.builder()
+                .advertisement(adMapper.toResponse(ad))
+                .audios(getAllAudios(ad))
+                .build()).toList();
     }
 }

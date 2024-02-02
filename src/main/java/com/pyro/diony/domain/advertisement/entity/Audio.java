@@ -11,21 +11,22 @@ import lombok.NoArgsConstructor;
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Audio extends BaseTimeEntity {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String prompt;
     private Integer location;  //audio 위치
+    private String audioUrl;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "advertisement_id")
     private Advertisement advertisement;
 
     @Builder
-    public Audio(String prompt, Integer location, Advertisement advertisement) {
+    public Audio(String prompt, Integer location, String audioUrl, Advertisement advertisement) {
         this.prompt = prompt;
         this.location = location;
+        this.audioUrl = audioUrl;
         this.advertisement = advertisement;
     }
 

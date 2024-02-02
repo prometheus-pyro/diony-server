@@ -10,5 +10,6 @@ import lombok.NoArgsConstructor;
 public class AudioRequest {
     private Long advertisementId;
     private String prompt;
+    private String audioUrl;
     private Integer location;
 }

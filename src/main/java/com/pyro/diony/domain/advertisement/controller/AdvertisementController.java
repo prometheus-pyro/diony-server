@@ -10,6 +10,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @Slf4j
 @RestController
 @RequiredArgsConstructor
@@ -27,6 +29,12 @@ public class AdvertisementController {
     @GetMapping("/{adId}")
     public AdvertiseResponse getAd(@PathVariable final Long adId) {
         return advertisementService.get(adId);
+    }
+
+    @ResponseStatus(HttpStatus.OK)
+    @GetMapping("/portfolios")
+    public List<AdvertiseResponse> getAllAd() {
+        return advertisementService.getAll();
     }
 
     @ResponseStatus(HttpStatus.CREATED)
