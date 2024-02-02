@@ -1,6 +1,7 @@
 package com.pyro.diony.domain.member.entity;
 
 
+import com.pyro.diony.global.config.BaseTimeEntity;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -9,17 +10,19 @@ import lombok.*;
 @Entity
 @Builder
 @AllArgsConstructor
-public class Member {
+public class Member extends BaseTimeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String oauthId;  //로그인한 소셜 타입의 식별자 값
-    private String name;
     private String nickname;
     private String email;
     private String password;
     private String imageUrl;
+
+    private String introduction;
+    private String job;
 
     private String refreshToken;
 
@@ -29,8 +32,10 @@ public class Member {
     @Enumerated(EnumType.STRING)
     private SocialType socialType;
 
-    public Member update(String name, String email, String imageUrl) {
-        this.name = name;
+    @Enumerated(EnumType.STRING)
+    private Status status;
+
+    public Member update(String email, String imageUrl) {
         this.email = email;
         this.imageUrl = imageUrl;
         return this;

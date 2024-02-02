@@ -3,6 +3,7 @@ package com.pyro.diony.global.oauth2;
 import com.pyro.diony.domain.member.entity.Member;
 import com.pyro.diony.domain.member.entity.Role;
 import com.pyro.diony.domain.member.entity.SocialType;
+import com.pyro.diony.domain.member.entity.Status;
 import com.pyro.diony.global.oauth2.userInfo.KakaoOAuth2UserInfo;
 import com.pyro.diony.global.oauth2.userInfo.OAuth2UserInfo;
 import lombok.Builder;
@@ -44,6 +45,7 @@ public class OAuthAttributes {
                 .nickname(oauth2UserInfo.getNickname())
                 .imageUrl(oauth2UserInfo.getImageUrl())
                 .role(Role.GUEST)
+                .status(Status.ACTIVE)
                 .build();
     }
 

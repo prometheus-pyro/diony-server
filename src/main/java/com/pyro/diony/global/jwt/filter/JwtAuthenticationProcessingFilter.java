@@ -49,6 +49,7 @@ public class JwtAuthenticationProcessingFilter extends OncePerRequestFilter {
         }
 
         if (refreshToken == null) {
+            log.info("refresh token is null");
             checkAccessTokenAndAuthentication(request, response, filterChain);
         }
     }
@@ -96,6 +97,9 @@ public class JwtAuthenticationProcessingFilter extends OncePerRequestFilter {
                 new UsernamePasswordAuthenticationToken(userDetails, null,
                         authoritiesMapper.mapAuthorities(userDetails.getAuthorities()));
         SecurityContextHolder.getContext().setAuthentication(authentication);
+        String name = SecurityContextHolder.getContext().getAuthentication().getName();
+        log.info("jwt authentication name : {}", name);
+
     }
 
 }
