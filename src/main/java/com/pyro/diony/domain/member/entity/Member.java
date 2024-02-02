@@ -1,6 +1,7 @@
 package com.pyro.diony.domain.member.entity;
 
 
+import com.pyro.diony.domain.member.dto.MemberSignUpRequest;
 import com.pyro.diony.global.config.BaseTimeEntity;
 import jakarta.persistence.*;
 import lombok.*;
@@ -43,5 +44,11 @@ public class Member extends BaseTimeEntity {
 
     public void updateRefreshToken(String updateRefreshToken) {
         this.refreshToken = updateRefreshToken;
+    }
+
+    public void signUp(MemberSignUpRequest dto) {
+        this.introduction = dto.getIntroduction();
+        this.job = dto.getJob();
+        this.status = Status.ACTIVE;
     }
 }

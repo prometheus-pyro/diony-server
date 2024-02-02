@@ -2,6 +2,7 @@ package com.pyro.diony.global.jwt.filter;
 
 
 import com.pyro.diony.domain.member.entity.Member;
+import com.pyro.diony.domain.member.entity.Role;
 import com.pyro.diony.domain.member.repository.MemberRepository;
 import com.pyro.diony.global.jwt.service.JwtService;
 import com.pyro.diony.global.jwt.util.PasswordUtil;
@@ -79,6 +80,12 @@ public class JwtAuthenticationProcessingFilter extends OncePerRequestFilter {
                         .ifPresent(email -> memberRepository.findByEmail(email)
                                 .ifPresent(this::saveAuthentication)));
         filterChain.doFilter(request, response);
+
+
+//        Member member = memberRepository.findByEmail(jwtService.extractEmail(jwtService.extractAccessToken(request).toString()).get()).get();
+//        String reIssueRefreshToken = reIssueRefreshToken(member);
+//        jwtService.sendAccessAndRefreshToken(response, jwtService.createAccessToken(member.getEmail()),
+//                reIssueRefreshToken);
     }
 
     public void saveAuthentication(Member member) {
@@ -90,7 +97,7 @@ public class JwtAuthenticationProcessingFilter extends OncePerRequestFilter {
         UserDetails userDetails = User.builder()
                 .username(member.getEmail())
                 .password(password)
-                .roles(member.getRole().getString())
+                .roles(member.getRole().name())
                 .build();
 
         Authentication authentication =

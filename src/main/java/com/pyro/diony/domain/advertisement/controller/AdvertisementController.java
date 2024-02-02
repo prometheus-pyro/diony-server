@@ -4,9 +4,11 @@ import com.pyro.diony.domain.advertisement.dto.AdvertiseRequest;
 import com.pyro.diony.domain.advertisement.dto.AudioRequest;
 import com.pyro.diony.domain.advertisement.dto.response.AdvertiseResponse;
 import com.pyro.diony.domain.advertisement.service.AdvertisementService;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,8 +23,8 @@ public class AdvertisementController {
 
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("")
-    public void createAd(@RequestBody @Valid final AdvertiseRequest dto) {
-        advertisementService.create(dto);
+    public void createAd(@RequestBody @Valid final AdvertiseRequest dto, HttpServletRequest request) {
+        advertisementService.create(dto, request);
     }
 
     @ResponseStatus(HttpStatus.OK)
@@ -42,4 +44,7 @@ public class AdvertisementController {
     public void createAudio(@RequestBody @Valid final AudioRequest dto) {
         advertisementService.createAudio(dto);
     }
+
+
+
 }
