@@ -13,10 +13,6 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class AdvertiseResponse {
-    Long memberId;
-    String profileImgUrl;
-    String introduction;
-    String nickname;
     AdDetailResponse advertisement;
     List<AudioDetailResponse> audios;
 }

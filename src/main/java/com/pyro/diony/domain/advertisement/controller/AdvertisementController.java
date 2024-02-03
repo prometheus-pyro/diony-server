@@ -23,8 +23,8 @@ public class AdvertisementController {
 
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("")
-    public void createAd(@RequestBody @Valid final AdvertiseRequest dto, HttpServletRequest request) {
-        advertisementService.create(dto, request);
+    public void createAd(@RequestBody @Valid final AdvertiseRequest dto) {
+        advertisementService.create(dto);
     }
 
     @ResponseStatus(HttpStatus.OK)
@@ -44,7 +44,5 @@ public class AdvertisementController {
     public void createAudio(@RequestBody @Valid final AudioRequest dto) {
         advertisementService.createAudio(dto);
     }
-
-
 
 }

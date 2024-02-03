@@ -7,14 +7,10 @@ import com.pyro.diony.domain.advertisement.dto.response.AdvertiseResponse;
 import com.pyro.diony.domain.advertisement.dto.response.AudioDetailResponse;
 import com.pyro.diony.domain.advertisement.entity.Advertisement;
 import com.pyro.diony.domain.advertisement.entity.Audio;
-import com.pyro.diony.domain.advertisement.mapper.AdvertisementMapper;
-import com.pyro.diony.domain.advertisement.mapper.AudioMapper;
 import com.pyro.diony.domain.advertisement.repository.AdvertisementRepository;
 import com.pyro.diony.domain.advertisement.repository.AudioRepository;
 import com.pyro.diony.domain.member.entity.Member;
-import com.pyro.diony.domain.member.service.MemberService;
 import jakarta.persistence.EntityNotFoundException;
-import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Sort;
@@ -28,15 +24,11 @@ import java.util.List;
 @RequiredArgsConstructor
 public class AdvertisementService {
     private final AdvertisementRepository advertiseRepository;
-    private final MemberService memberService;
     private final AudioRepository audioRepository;
-    private final AdvertisementMapper adMapper;
-    private final AudioMapper audioMapper;
 
     @Transactional
-    public void create(AdvertiseRequest dto, HttpServletRequest request) {
+    public void create(AdvertiseRequest dto) {
         advertiseRepository.save(Advertisement.builder()
-                .member(memberService.getMember(request))
                 .prompt(dto.getPrompt())
                 .videoUrl(dto.getVideoUrl())
                 .musicUrl(dto.getMusicUrl())
@@ -51,10 +43,6 @@ public class AdvertisementService {
 
         final Member member = ad.getMember();
         return AdvertiseResponse.builder()
-                .memberId(member.getId())
-                .profileImgUrl(member.getImageUrl())
-                .introduction(member.getIntroduction())
-                .nickname(member.getNickname())
                 .advertisement(AdDetailResponse.builder()
                         .id(ad.getId())
                         .prompt(ad.getPrompt())
@@ -95,8 +83,6 @@ public class AdvertisementService {
         List<Advertisement> ads = advertiseRepository
                 .findAll(Sort.by(Sort.Direction.DESC, "createdAt"));
         return ads.stream().map(ad -> AdvertiseResponse.builder()
-                .memberId(ad.getMember().getId())
-                .profileImgUrl(ad.getMember().getImageUrl())
                 .advertisement(AdDetailResponse.builder()
                         .id(ad.getId())
                         .prompt(ad.getPrompt())
