@@ -49,6 +49,6 @@ public class Member extends BaseTimeEntity {
     public void signUp(MemberSignUpRequest dto) {
         this.introduction = dto.getIntroduction();
         this.job = dto.getJob();
-        this.status = Status.ACTIVE;
+        this.role = Role.USER;
     }
 }

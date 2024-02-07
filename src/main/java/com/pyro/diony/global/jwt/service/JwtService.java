@@ -11,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
 import java.util.Optional;
@@ -81,7 +82,6 @@ public class JwtService {
         response.setStatus(HttpServletResponse.SC_OK);
 
         response.setHeader(accessHeader, accessToken);
-        log.info("재발급된 Access Token : {}", accessToken);
     }
 
     /**
@@ -139,6 +139,7 @@ public class JwtService {
     /**
      * RefreshToken DB 저장 (업데이트)
      */
+    @Transactional
     public void updateRefreshToken(String email, String refreshToken) {
         memberRepository.findByEmail(email)
                 .ifPresentOrElse(
